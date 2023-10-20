@@ -8,9 +8,10 @@ import {
   getDefaultWallets,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
-import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { Chain, configureChains, createConfig, WagmiConfig } from 'wagmi';
 import {
   mainnet,
+  goerli,
   polygon,
   optimism,
   arbitrum,
@@ -19,9 +20,33 @@ import {
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 
+export const scrollSepolia = {
+  id: 534_351,
+  name: 'scrollSepolia',
+  network: 'scrollSepolia',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Scroll Sepolia',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    public: { http: ['https://sepolia-rpc.scroll.io/'] },
+    default: { http: ['https://sepolia-rpc.scroll.io/'] },
+  },
+  blockExplorers: {
+    etherscan: { name: 'ScrollScan', url: 'https://sepolia.scrollscan.com' },
+    default: { name: 'ScrollScan', url: 'https://sepolia.scrollscan.com' },
+  },
+  // contracts: {
+  //   multicall3: {
+  //     address: '0xca11bde05977b3631167028862be2a173976ca11',
+  //     blockCreated: 11_907_934,
+  //   },
+  // },
+} 
 
 const { chains, publicClient  } = configureChains(
-  [mainnet],
+  [goerli,scrollSepolia],
   [
     //alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY , priority:0 }),
     alchemyProvider({apiKey:"ZBnV2-odWv83XHBbBCL8zJPYUOedtp5t", priority:0 }),
