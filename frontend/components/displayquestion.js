@@ -6,7 +6,7 @@ import {
   useAccount,
 } from 'wagmi'
 
-import { abi,contract_addr } from './nft-abi';
+import { abi,contract_addr,contract_addr_scroll,contract_addr_mantle } from './nft-abi';
 import { ethers } from 'ethers';
 import Link from 'next/link';
 
@@ -21,13 +21,9 @@ export default function DisplayQuestion() {
     const { address: accountAddress , isConnected} = useAccount();
     const [mychain, setmychain] = useState(null);
     const { chain, chains } = useNetwork()
-    const [deadline, setDeadline] = useState(1697854852);
-    const [stake,setStake]=useState(2000000000000000)
-    const [entryFee,setEntryFee]=useState(100000000000000)
-    const [content,setContent]=useState("")
-    const [option1,setOption1]=useState("")
-    const [option2,setOption2]=useState("")
-      
+    const [curr_contract,setcurr_contract]=useState(contract_addr)
+    const [questionList, setQuestionList]=useState([])
+    
     useEffect(() => {
       setIsAccountConnceted(isConnected);
       if (accountAddress) {
@@ -35,6 +31,15 @@ export default function DisplayQuestion() {
       }
       if(chain){
         setmychain(chain)
+        if(chain.name=="scrollSepolia"){
+            setcurr_contract(contract_addr_scroll)
+        }
+        if(chain.name=="Mantle Testnet"){
+            setcurr_contract(contract_addr_mantle)
+        }
+        if(chain.name=="Goerli"){
+            setcurr_contract(contract_addr)
+        }
       }
       if(!isConnected){
         setAddress(null);
@@ -46,7 +51,7 @@ export default function DisplayQuestion() {
 
     
     const {data1} = useContractRead({
-        address: contract_addr,
+        address: curr_contract,
         abi: abi,
         functionName: 'listQuestions',
         onSettled(data, error) {
@@ -62,7 +67,7 @@ export default function DisplayQuestion() {
       })
 
       const {data2} = useContractRead({
-        address: contract_addr,
+        address: curr_contract,
         abi: abi,
         functionName: 'listAnswers',
         args: [0],

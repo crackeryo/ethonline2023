@@ -69,3 +69,9 @@
     border-right-width: 3px;
     border-bottom-width: 3px;
   }
+  .create_button:disabled{
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    color: lightgray;
+    background-color: gray;
+  }
