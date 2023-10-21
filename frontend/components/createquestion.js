@@ -6,7 +6,7 @@ import {
   useAccount,
 } from 'wagmi'
 
-import { abi,contract_addr } from './nft-abi';
+import { abi,contract_addr,contract_addr_scroll,contract_addr_mantle } from './nft-abi';
 import { ethers } from 'ethers';
 import Link from 'next/link';
 
@@ -14,7 +14,7 @@ import { isErrored } from 'stream';
 import { useNetwork } from 'wagmi'
 
 export default function CreateQuestion() {
-
+    
     const [address, setAddress] = useState(null);
     const [isAccountConnected,setIsAccountConnceted]=useState(false);
 
@@ -24,9 +24,10 @@ export default function CreateQuestion() {
     const [deadline, setDeadline] = useState(1697854852);
     const [stake,setStake]=useState(2000000000000000)
     const [entryFee,setEntryFee]=useState(100000000000000)
-    const [content,setContent]=useState("Which country has the best food?")
-    const [option1,setOption1]=useState("France")
-    const [option2,setOption2]=useState("Japan")
+    const [content,setContent]=useState("")
+    const [option1,setOption1]=useState("")
+    const [option2,setOption2]=useState("")
+    const [curr_contract,setcurr_contract]=useState(contract_addr)
       
     useEffect(() => {
       setIsAccountConnceted(isConnected);
@@ -35,6 +36,14 @@ export default function CreateQuestion() {
       }
       if(chain){
         setmychain(chain)
+        console.log("mychian")
+        console.log(chain.name)
+        if(chain.name=="scrollSepolia"){
+            setcurr_contract(contract_addr_scroll)
+        }
+        if(chain.name=="Mantle Testnet"){
+            setcurr_contract(contract_addr_mantle)
+        }
       }
       if(!isConnected){
         setAddress(null);
@@ -45,45 +54,45 @@ export default function CreateQuestion() {
  
 
     
-    const {data1} = useContractRead({
-        address: contract_addr,
-        abi: abi,
-        functionName: 'listQuestions',
-        onSettled(data, error) {
-            if(data){
-                    console.log(data)
-            }
-            if(error){
-                console.log("failed")
-                console.log(error)
-            }
+    // const {data1} = useContractRead({
+    //     address: contract_addr,
+    //     abi: abi,
+    //     functionName: 'listQuestions',
+    //     onSettled(data, error) {
+    //         if(data){
+    //                 console.log(data)
+    //         }
+    //         if(error){
+    //             console.log("failed")
+    //             console.log(error)
+    //         }
   
-        },
-      })
+    //     },
+    //   })
 
-      const {data2} = useContractRead({
-        address: contract_addr,
-        abi: abi,
-        functionName: 'listAnswers',
-        args: [0],
-        onSettled(data, error) {
-            if(data){
-                    console.log(data)
-            }
-            if(error){
-                console.log("failed")
-                console.log(error)
-            }
+    //   const {data2} = useContractRead({
+    //     address: contract_addr,
+    //     abi: abi,
+    //     functionName: 'listAnswers',
+    //     args: [0],
+    //     onSettled(data, error) {
+    //         if(data){
+    //                 console.log(data)
+    //         }
+    //         if(error){
+    //             console.log("failed")
+    //             console.log(error)
+    //         }
   
-        },
-      })
+    //     },
+    //   })
 
 
 
       const { config:config_createQuestion ,
         error: prepareError,
         isError: isPrepareError,} = usePrepareContractWrite({
-        address: contract_addr,
+        address: curr_contract,
         abi: abi,
         functionName: 'createQuestion',
         args: [deadline,stake,entryFee,content,option1,option2],
@@ -113,8 +122,8 @@ export default function CreateQuestion() {
         } else if (selectedValue === '1month') {
           seconds = 2592000;
         }
-    
-        setDeadline(seconds);
+        const currentTimestampInSeconds = Math.floor(Date.now() / 1000);
+        setDeadline(currentTimestampInSeconds+seconds);
       };
     
       const handleStakeChange = (event) => {
@@ -143,12 +152,11 @@ return (
       
 <div className={styles.container}>
 
-    <h1>Hello</h1>
     
     {isAccountConnected ? (
         <>
 
-            {mychain && <div>Connected to {mychain.name}</div>}
+            {/* {mychain && <div>Connected to {mychain.name}</div>} */}
           
 
 
@@ -156,35 +164,38 @@ return (
  
 
       <div className={styles.input}>
-        <label className={styles.label}>Question:</label>
+        <label className={styles.label}>Question</label>
         <input
           type="text"
           value={content}
           onChange={handleContentChange}
           maxLength="100"
-          className={`${styles.questionInput}`}
+          placeholder='Enter your question here'
+          className={`${styles.inputbox} ${styles.questionInput}`}
         />
       </div>
 
       <div className={styles.optionsContainer}>
         <div>
-          <label className={styles.optionsLabel}>Option 1:</label>
+          {/* <label className={styles.optionsLabel}>Option 1:</label> */}
           <input
             type="text"
             value={option1}
             onChange={handleOption1Change}
             maxLength="25"
-            className={styles.optionsInput}
+            placeholder='Enter Option 1'
+            className={`${styles.inputbox} ${styles.optionsInput}`}
           />
         </div>
         <div>
-          <label className={styles.optionsLabel}>Option 2:</label>
+          {/* <label className={styles.optionsLabel}>Option 2:</label> */}
           <input
             type="text"
             value={option2}
             onChange={handleOption2Change}
             maxLength="25"
-            className={styles.optionsInput}
+            placeholder='Enter Option 2'
+            className={`${styles.inputbox} ${styles.optionsInput}`}
           />
           {/* <div className={styles.optionsNote}>(max 25 char)</div> */}
         </div>
@@ -192,25 +203,26 @@ return (
         
       </div>
       <div className={styles.input}>
-        <label className={styles.label}>Bounty:</label>
+        <label className={styles.label}>Bounty</label>
         <input
           type="number"
           value={stake / 1000000000000000000}
           onChange={handleStakeChange}
+          className={`${styles.inputbox} ${styles.amountInput}`}
         />
       </div>
       <div className={styles.input}>
-        <label className={styles.label}>Deadline:</label>
-        <select onChange={handleDeadlineChange}>
+        <label className={styles.label}>Ends In</label>
+        <select onChange={handleDeadlineChange}  className={styles.inputbox}>
           <option value="1day">1 day</option>
-          <option value="3days">3 days</option>
+          <option value="3days" selected="selected">3 days</option>
           <option value="1week">1 week</option>
           <option value="1month">1 month</option>
         </select>
       </div>
 
     
-      <button className={styles.mint_button} disabled={!write} onClick={() => write?.()}>{isLoading ? 'Minting' : 'Create'}</button>
+      <button className={styles.create_button} disabled={!write} onClick={() => write?.()}>{isLoading ? 'Creating' : 'Create'}</button>
     </div>
          
         </>
