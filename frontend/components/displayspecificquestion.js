@@ -12,9 +12,12 @@ import Link from 'next/link';
 
 import { isErrored } from 'stream';
 import { useNetwork } from 'wagmi'
+import { useRouter } from 'next/router';
 
-export default function DisplayQuestion() {
-
+export default function DisplaySpecificQuestion() {
+    const router = useRouter();
+    const { query } = router;
+    const { questionid } = query;
     const [address, setAddress] = useState(null);
     const [isAccountConnected,setIsAccountConnceted]=useState(false);
 
@@ -22,7 +25,10 @@ export default function DisplayQuestion() {
     const [mychain, setmychain] = useState(null);
     const { chain, chains } = useNetwork()
     const [curr_contract,setcurr_contract]=useState(contract_addr)
-    const [questionList, setQuestionList]=useState([])
+    const [question, setQuestion]=useState(null)
+    const [voteCount1, setVoteCount1]=useState(0)
+    const [voteCount2, setVoteCount2]=useState(0)
+    const [answerList, setAnswerList]=useState([])
     
     useEffect(() => {
       setIsAccountConnceted(isConnected);
@@ -53,11 +59,11 @@ export default function DisplayQuestion() {
     const {data1} = useContractRead({
         address: curr_contract,
         abi: abi,
-        functionName: 'listQuestions',
+        functionName: 'questions',
+        args: [questionid],
         onSettled(data, error) {
             if(data){
                     console.log(data)
-                    setQuestionList(data)
             }
             if(error){
                 console.log("failed")
@@ -71,7 +77,24 @@ export default function DisplayQuestion() {
         address: curr_contract,
         abi: abi,
         functionName: 'listAnswers',
-        args: [0],
+        args: [questionid],
+        onSettled(data, error) {
+            if(data){
+                    console.log(data)
+            }
+            if(error){
+                console.log("failed")
+                console.log(error)
+            }
+  
+        },
+      })
+
+      const {data3} = useContractRead({
+        address: curr_contract,
+        abi: abi,
+        functionName: 'getVoteCount',
+        args: [questionid],
         onSettled(data, error) {
             if(data){
                     console.log(data)
@@ -90,37 +113,20 @@ export default function DisplayQuestion() {
 
 
 
-
 return (
 
       
 <div className={styles.container}>
 
-    <h1>Display Question</h1>
+    <h1>Display Answers and Vote</h1>
     
     {isAccountConnected ? (
         <>
 
-    {mychain && <div>Connected to {mychain.name}</div>}
-          
+    {/* {mychain && <div>Connected to {mychain.name}</div>} */}
+    <div className={styles.answerContainer}>
 
-
-    <div className={styles.questionContainer}>
-
-      {questionList.map((data, index) => (
-        <Link href={`/question?questionid=${index}`}>
-          <div key={index}>
-            <h2>{data.content}</h2>
-            <p>Creator: {data.creator}</p>
-            <p>Deadline (Unix Timestamp): {data.deadline}</p>
-            <p>Entry Fee: {Number(data.entryFee)/1000000000000000000} ETH</p>
-            <p>Option 1: {data.option1}</p>
-            <p>Option 2: {data.option2}</p>
-            <p>Qualified Answers Count: {Number(data.qualifiedAnswersCount)}</p>
-            <p>Stake: {Number(data.stake)/1000000000000000000} ETH</p>
-          </div>
-        </Link>
-      ))}
+            {questionid}
 
 
 
