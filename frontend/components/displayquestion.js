@@ -12,6 +12,7 @@ import Link from 'next/link';
 
 import { isErrored } from 'stream';
 import { useNetwork } from 'wagmi'
+import Countdown from './countdown';
 
 export default function DisplayQuestion() {
 
@@ -112,7 +113,8 @@ return (
           <div key={index}>
             <h2>{data.content}</h2>
             <p>Creator: {data.creator}</p>
-            <p>Deadline (Unix Timestamp): {data.deadline}</p>
+            <p>Ends in: 
+              <Countdown deadline={Number(data.deadline)}></Countdown></p>
             <p>Entry Fee: {Number(data.entryFee)/1000000000000000000} ETH</p>
             <p>Option 1: {data.option1}</p>
             <p>Option 2: {data.option2}</p>

@@ -1,0 +1,37 @@
+.answerGroups {
+    display: flex;
+    justify-content: space-around; /* Adjust as needed for spacing */
+  }
+  
+  /* Style for the answer container */
+  .answerContainer {
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 45%; /* Adjust the width as needed to leave some spacing */
+  }
+
+  .choiceContainer {
+    width: 350px;
+    display: flex;
+    justify-content: space-around; /* Adjust as needed for spacing */
+  }
+  .choice {
+    width: 100px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px;
+    border: 3px solid #333;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-radius: 5px;
+  }
+  
+  .selected {
+    background-color: orange;
+    border: 3px solid rgb(96, 90, 90);
+  }

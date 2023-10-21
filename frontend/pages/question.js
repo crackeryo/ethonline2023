@@ -13,7 +13,7 @@ export default function Home() {
       </Head>
         <DisplaySpecificQuestion></DisplaySpecificQuestion>
 
-      <div>intro</div>
+ 
     </Layout>
   )
 }

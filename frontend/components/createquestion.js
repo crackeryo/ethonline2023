@@ -21,7 +21,7 @@ export default function CreateQuestion() {
     const { address: accountAddress , isConnected} = useAccount();
     const [mychain, setmychain] = useState(null);
     const { chain, chains } = useNetwork()
-    const [deadline, setDeadline] = useState(1697854852);
+    const [deadline, setDeadline] = useState(259200);
     const [stake,setStake]=useState(2000000000000000)
     const [entryFee,setEntryFee]=useState(100000000000000)
     const [content,setContent]=useState("")
@@ -122,8 +122,8 @@ export default function CreateQuestion() {
         } else if (selectedValue === '1month') {
           seconds = 2592000;
         }
-        const currentTimestampInSeconds = Math.floor(Date.now() / 1000);
-        setDeadline(currentTimestampInSeconds+seconds);
+        // const currentTimestampInSeconds = Math.floor(Date.now() / 1000);
+        setDeadline(seconds);
       };
     
       const handleStakeChange = (event) => {
