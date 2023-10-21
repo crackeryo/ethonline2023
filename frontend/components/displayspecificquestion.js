@@ -14,6 +14,24 @@ import { isErrored } from 'stream';
 import { useNetwork } from 'wagmi'
 import { useRouter } from 'next/router';
 
+function VoteVisualization({ vote1, vote2 }) {
+    // Calculate the percentage width based on the votes
+    const totalVotes = vote1 + vote2;
+    const vote1Percentage = totalVotes === 0 ? 50 : (vote1 / totalVotes) * 100;
+    const vote2Percentage = totalVotes === 0 ? 50 : (vote2 / totalVotes) * 100;
+  
+    return (
+    <div className={styles.vote_bars}>
+      <div style={{ width: `${vote1Percentage}%` }} className={`${styles.vote_bar} ${styles.bgcolor1}`}>
+        {vote1}
+      </div>
+      <div style={{ width: `${vote2Percentage}%` }} className={styles.vote_bar}>
+        {vote2}
+      </div>
+    </div>
+    );
+  }
+
 export default function DisplaySpecificQuestion() {
     const router = useRouter();
     const { query } = router;
@@ -145,25 +163,26 @@ return (
       
 <div className={styles.container}>
 
-    <h1>Display Answers and Vote</h1>
+    {/* <h1>Display Answers and Vote</h1> */}
     
     {isAccountConnected ? (
         <>
 
     {/* {mychain && <div>Connected to {mychain.name}</div>} */}
     <div className={styles.Container}>
-            {questionid}
-            {question}
-            {voteCount1}
-            {voteCount2}
+  
+            <div className={styles.question}>{question}</div>
+            <VoteVisualization vote1={voteCount1} vote2={voteCount2} />
+          
+     
 
         <div className={styles.answerGroups}>
             <div className={styles.answerContainer}>
                 <div  className={styles.optionText}>{option1}</div>
             {option0Answers.map((data, index) => (
                 <div key={index}>
-                    <h2>{data.content}</h2>
-                    <p>Creator: {data.creator}</p>
+                    <p className={styles.answer_display}>{data.content}</p>
+                    <p className={styles.author_display} > {data.creator}</p>
                 </div>
             ))}
 
@@ -174,21 +193,27 @@ return (
             {option1Answers.map((data, index) => (
 
                 <div key={index}>
-                    <h2>{data.content}</h2>
-                    <p>Creator: {data.creator}</p>
+                     <p className={styles.answer_display}>{data.content}</p>
+                    <p className={styles.author_display} > {data.creator}</p>
                 </div>
             ))}
 
+            
+
             </div>
         </div>
+        <div>  Please Select One Option</div>
         <div className={styles.choiceContainer}>
-            <div  className={`${styles.choice} ${choice === 0 ? styles.selected : ''}`}
+            <div  className={`${styles.choice} ${styles.bgcolor1} ${choice === 0 ? styles.selected : ''}`}
             onClick={() => setChoice(0)}> {option1} </div>
-            <div  className={`${styles.choice} ${choice === 1 ? styles.selected : ''}`}
+            <div  className={`${styles.choice}  ${styles.bgcolor2} ${choice === 1 ? styles.selected : ''}`}
             onClick={() => setChoice(1)}> {option2}</div>
+
+          
       </div>
-        <input    value={answer} onChange={(e) => setAnswer(e.target.value)}></input>
-        
+     
+        <textarea classname={styles.answertext}   placeholder="Enter your reason here (min 30 char)" value={answer} onChange={(e) => setAnswer(e.target.value)}></textarea>
+        <br></br>
         <button className={styles.create_button} disabled={!write} onClick={() => write?.()}>{isLoading ? 'Sending' : 'Answer'}</button>
 
     </div>
