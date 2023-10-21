@@ -12,6 +12,7 @@ import { Chain, configureChains, createConfig, WagmiConfig } from 'wagmi';
 import {
   mainnet,
   goerli,
+  mantleTestnet,
   polygon,
   optimism,
   arbitrum,
@@ -45,8 +46,10 @@ export const scrollSepolia = {
   // },
 } 
 
+
+
 const { chains, publicClient  } = configureChains(
-  [goerli,scrollSepolia],
+  [goerli,scrollSepolia,mantleTestnet],
   [
     //alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY , priority:0 }),
     alchemyProvider({apiKey:"ZBnV2-odWv83XHBbBCL8zJPYUOedtp5t", priority:0 }),
