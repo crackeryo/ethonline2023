@@ -90,7 +90,10 @@ export default function DisplayQuestion() {
 
 
 
+    const [showExpired, setShowExpired] = useState(true); // State to manage visibility
 
+    const currentDate = Math.floor(new Date().getTime()/1000);
+    
 
 return (
 
@@ -110,8 +113,13 @@ return (
 
     <div className={styles.container}>
     <h1> Question List ({mychain.name})</h1>
-
+    <button  className={showExpired ? styles.showExpired : styles.hideExpired} onClick={() => setShowExpired(!showExpired)}>
+        {showExpired ? "Hide Expired Questions" : "Show Expired Questions"}
+      </button>
       {questionList.map((data, index) => (
+
+         ((Number(data.deadline)> currentDate || showExpired) &&
+
         <Link href={`/question?questionid=${index}`} style={{ textDecoration: "none" }}>
           <div key={index} className={styles.questionContainer}>
             <h2  className={styles.question}>{data.content} [{Number(data.qualifiedAnswersCount)}]</h2>
@@ -133,6 +141,7 @@ return (
            
           </div>
         </Link>
+         )
       ))}
 
 
