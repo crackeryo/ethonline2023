@@ -90,7 +90,7 @@ export default function DisplayQuestion() {
 
 
 
-    const [showExpired, setShowExpired] = useState(true); // State to manage visibility
+    const [showExpired, setShowExpired] = useState(false); // State to manage visibility
 
     const currentDate = Math.floor(new Date().getTime()/1000);
     
