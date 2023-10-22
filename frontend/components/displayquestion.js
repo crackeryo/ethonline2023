@@ -142,7 +142,7 @@ return (
         </>
           
       ) : (
-        <p>Please connect your wallet to view the page</p>
+        <p className={styles.warning}>Please connect your wallet to view the page</p>
       )}
 
 

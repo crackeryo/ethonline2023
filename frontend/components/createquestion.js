@@ -235,7 +235,7 @@ return (
         </>
           
       ) : (
-        <p>Please connect your wallet</p>
+        <p>Connect Wallet Button is on the upper right.</p>
       )}
 
 

@@ -59,3 +59,9 @@
     color:rgb(208, 177, 142);
     font-weight: bold;
   }
+  .warning{
+    margin-top: 50px;
+    border: 5px solid black;
+    border-radius: 10px;
+    padding: 10px;
+  }
