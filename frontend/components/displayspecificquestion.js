@@ -123,6 +123,8 @@ export default function DisplaySpecificQuestion() {
         args: [questionid],
         onSettled(data, error) {
             if(data){
+                console.log("votecount")
+                console.log(data)
                 setVoteCount1(Number(data[0]))
                 setVoteCount2(Number(data[1]))
             }
@@ -178,7 +180,7 @@ return (
 
         <div className={styles.answerGroups}>
             <div className={styles.answerContainer}>
-                <div  className={styles.optionText}>{option1}</div>
+            <div  className={`${styles.optionText} ${styles.bgcolor1}`}>{option1}</div>
             {option0Answers.map((data, index) => (
                 <div key={index}>
                     <p className={styles.answer_display}>{data.content}</p>
@@ -189,7 +191,7 @@ return (
             </div>
           
             <div className={styles.answerContainer}>
-            <div  className={styles.optionText}>{option2}</div>
+            <div  className={`${styles.optionText} ${styles.bgcolor2}`}>{option2}</div>
             {option1Answers.map((data, index) => (
 
                 <div key={index}>
@@ -211,7 +213,7 @@ return (
 
           
       </div>
-     
+            
         <textarea classname={styles.answertext}   placeholder="Enter your reason here (min 30 char)" value={answer} onChange={(e) => setAnswer(e.target.value)}></textarea>
         <br></br>
         <button className={styles.create_button} disabled={!write} onClick={() => write?.()}>{isLoading ? 'Sending' : 'Answer'}</button>

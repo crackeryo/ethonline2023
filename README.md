@@ -28,12 +28,12 @@ Questions will be displayed on front page and user will be able to submit their 
 
 The project is deployed on the following chains, with contracts listed below.
 
-- [Scroll Sepolia](https://sepolia-blockscout.scroll.io/address/0xf77A71Ade24100fee83c899821ccBDdc549618e0#code)
+- [Scroll Sepolia](https://sepolia-blockscout.scroll.io/address/0xA982878Cce7F79cb8b75C26c049dCdEf32F0112c#code)
 
 
 
- - [Mantle Testnet](https://explorer.testnet.mantle.xyz/address/0x265863884dE65c2902025AdeB327Be0e18898e29#code)
+ - [Mantle Testnet](https://explorer.testnet.mantle.xyz/address/0x256D6A9dc4e82f5d817c2395DF2Be6EE04daB5Fb#code)
 	 - Link to the tweet: https://twitter.com/0xfrypan/status/1715760764886171676
 
 
-- [Goerli](https://goerli.etherscan.io/address/0x03Bfe63C1742F653418cd49754dBd9239bDb8cAF#code)
+- [Goerli](https://goerli.etherscan.io/address/0x6a2b832c75e327Fcf6a6321DBeB5002603bcDB1B#code)
