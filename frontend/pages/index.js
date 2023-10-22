@@ -14,7 +14,7 @@ export default function Home() {
       <NavBar></NavBar>
       <DisplayQuestion></DisplayQuestion>
       <CreateQuestion></CreateQuestion>
-      <div>intro</div>
+      
     </Layout>
   )
 }

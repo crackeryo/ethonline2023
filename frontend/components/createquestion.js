@@ -28,7 +28,11 @@ export default function CreateQuestion() {
     const [option1,setOption1]=useState("")
     const [option2,setOption2]=useState("")
     const [curr_contract,setcurr_contract]=useState(contract_addr)
-      
+    const [isQuestionContainerVisible, setQuestionContainerVisible] = useState(false);
+
+    const toggleQuestionContainer = () => {
+      setQuestionContainerVisible(!isQuestionContainerVisible);
+    };
     useEffect(() => {
       setIsAccountConnceted(isConnected);
       if (accountAddress) {
@@ -159,7 +163,10 @@ return (
             {/* {mychain && <div>Connected to {mychain.name}</div>} */}
           
 
-
+    <div className={styles.toggleButton} onClick={toggleQuestionContainer}>
+        Create
+    </div>
+    {isQuestionContainerVisible && (
     <div className={styles.questionContainer}>
  
 
@@ -224,7 +231,7 @@ return (
     
       <button className={styles.create_button} disabled={!write} onClick={() => write?.()}>{isLoading ? 'Creating' : 'Create'}</button>
     </div>
-         
+    )}
         </>
           
       ) : (
