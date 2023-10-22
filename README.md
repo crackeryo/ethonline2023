@@ -24,7 +24,18 @@ Questions will be displayed on front page and user will be able to submit their 
 
 - Every person who submit an answer must submit a small stake(defined by question creator) alongside of the question, stake will be returned as well unless the answer got marked to reduce spam.
 
-# Smart Contract
+## Running Code
+
+1.Enter frontend folder
+`cd frontend`
+
+2.Install dependencies
+`npm install`
+
+3. Get it running
+`npm run dev`
+
+## Smart Contract
 
 The project is deployed on the following chains, with contracts listed below.
 

@@ -110,6 +110,7 @@ contract DualDialogue  is Ownable{
             uint questionId = questionIds[i];
             if (answers[questionId].isQualified) {
                 totalEarnings += (questions[questionId].stake / questions[questionId].qualifiedAnswersCount);
+                totalEarnings += questions[questionId].entryFee;
             }
         }
         
@@ -142,9 +143,9 @@ contract DualDialogue  is Ownable{
         require(questionId < questionCounter, "Question does not exist");
         
         for (uint i = 0; i < answerCounter; i++) {
-            if (answers[i].chosenOption == 0 && userEarnings[answers[i].creator].questionIds[i] == questionId) {
+            if (answers[i].chosenOption == 0 && answers[i].questionId == questionId) {
                 countOption0++;
-            } else if (answers[i].chosenOption == 1 && userEarnings[answers[i].creator].questionIds[i] == questionId) {
+            } else if (answers[i].chosenOption == 1 && answers[i].questionId== questionId) {
                 countOption1++;
             }
         }
