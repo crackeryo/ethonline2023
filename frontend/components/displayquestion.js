@@ -1,4 +1,4 @@
-import styles from './createquestion.module.css';
+import styles from './displayquestion.module.css';
 import { useEffect, useState } from 'react'
 import { useContractRead } from 'wagmi'
 import { usePrepareContractWrite, useContractWrite,useWaitForTransaction} from 'wagmi'
@@ -97,29 +97,40 @@ return (
       
 <div className={styles.container}>
 
-    <h1>Display Question</h1>
+   
     
     {isAccountConnected ? (
         <>
 
-    {mychain && <div>Connected to {mychain.name}</div>}
-          
 
 
-    <div className={styles.questionContainer}>
+    {/* {mychain && <div>Connected to {mychain.name}</div>}
+           */}
+
+
+    <div className={styles.container}>
+    <h1> Question List ({mychain.name})</h1>
 
       {questionList.map((data, index) => (
-        <Link href={`/question?questionid=${index}`}>
-          <div key={index}>
-            <h2>{data.content}</h2>
-            <p>Creator: {data.creator}</p>
-            <p>Ends in: 
+        <Link href={`/question?questionid=${index}`} style={{ textDecoration: "none" }}>
+          <div key={index} className={styles.questionContainer}>
+            <h2  className={styles.question}>{data.content} [{Number(data.qualifiedAnswersCount)}]</h2>
+            <div className={styles.choiceContainer}>
+              <div className={`${styles.choice} ${styles.bgcolor1} `} > {data.option1}</div>
+              <div  className={`${styles.choice} ${styles.bgcolor2} `} > {data.option2}</div>
+            </div>
+
+            {/* <p>Creator: {data.creator}</p> */}
+            <div  className={styles.choiceContainer}>
+              <div  className={styles.numtext}>Bounty: {Number(data.stake)/1000000000000000000} ETH</div>
+              <div  className={styles.numtext}>Entry Stake: {Number(data.entryFee)/1000000000000000000} ETH</div>
+            </div>
+            <p  className={styles.deadline}>Ends: &nbsp;
               <Countdown deadline={Number(data.deadline)}></Countdown></p>
-            <p>Entry Fee: {Number(data.entryFee)/1000000000000000000} ETH</p>
-            <p>Option 1: {data.option1}</p>
-            <p>Option 2: {data.option2}</p>
-            <p>Qualified Answers Count: {Number(data.qualifiedAnswersCount)}</p>
-            <p>Stake: {Number(data.stake)/1000000000000000000} ETH</p>
+            
+           
+            {/* <p>Qualified Answers Count: {Number(data.qualifiedAnswersCount)}</p> */}
+           
           </div>
         </Link>
       ))}

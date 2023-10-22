@@ -3,6 +3,7 @@
     flex-direction: column;
     text-align: center;
     align-items: center;
+    margin-top: 55px;
 }
 .answerGroups {
     display: flex;
@@ -31,7 +32,7 @@
     justify-content: center;
   }
   .choice {
-    width: 100px;
+    width: 200px;
     height: 50px;
     display: flex;
     justify-content: center;
@@ -90,5 +91,14 @@
   .question{
     font-size: 35px;
     font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 15px;
 
+  }
+  .answer_block{
+    border-bottom: 3px dotted black;
+  }
+  .author_display{
+    font-size: 10px;
+    color:grey;
   }

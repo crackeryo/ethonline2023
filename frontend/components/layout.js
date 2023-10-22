@@ -75,7 +75,7 @@ export default function Layout({ children }) {
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
         <div>
-          <ConnectButton></ConnectButton>
+          {/* <ConnectButton></ConnectButton> */}
           {children}
         </div>
         

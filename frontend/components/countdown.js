@@ -32,8 +32,8 @@ export default function Countdown({ deadline }) {
   }, [deadline]);
 
   return (
-    <div>
+    <span>
         {coundownText}
-    </div>
+    </span>
   );
 }

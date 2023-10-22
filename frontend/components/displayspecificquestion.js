@@ -182,9 +182,9 @@ return (
             <div className={styles.answerContainer}>
             <div  className={`${styles.optionText} ${styles.bgcolor1}`}>{option1}</div>
             {option0Answers.map((data, index) => (
-                <div key={index}>
+                <div key={index} className={styles.answer_block}>
                     <p className={styles.answer_display}>{data.content}</p>
-                    <p className={styles.author_display} > {data.creator}</p>
+                    <p className={styles.author_display} >  From: {data.creator}</p>
                 </div>
             ))}
 
@@ -194,9 +194,9 @@ return (
             <div  className={`${styles.optionText} ${styles.bgcolor2}`}>{option2}</div>
             {option1Answers.map((data, index) => (
 
-                <div key={index}>
+                <div key={index} className={styles.answer_block}>
                      <p className={styles.answer_display}>{data.content}</p>
-                    <p className={styles.author_display} > {data.creator}</p>
+                    <p className={styles.author_display} > From: {data.creator}</p>
                 </div>
             ))}
 

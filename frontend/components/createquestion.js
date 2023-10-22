@@ -212,7 +212,7 @@ return (
         />
       </div>
       <div className={styles.input}>
-        <label className={styles.label}>Ends In</label>
+        <label className={styles.label}>Ends In </label>
         <select onChange={handleDeadlineChange}  className={styles.inputbox}>
           <option value="1day">1 day</option>
           <option value="3days" selected="selected">3 days</option>
